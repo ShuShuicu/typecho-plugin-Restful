@@ -220,7 +220,7 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
                 $result[$value['name']] = array(
                     "name" => $value['name'],
                     "type" => $value['type'],
-                    "value" => $value[$value['type'] . '_value'],
+                    "value" => $value['str_value'],
                 );
             }
         }
@@ -237,7 +237,7 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         $this->lockMethod('get');
         $this->checkState('posts');
 
-        $pageSize = $this->getParams('pageSize', 5);
+        $pageSize = $this->getParams('pageSize', isset($_GET['number'])? $_GET['number'] : '10');
         $page = $this->getParams('page', 1);
         $page = is_numeric($page) ? $page : 1;
         $offset = $pageSize * ($page - 1);
