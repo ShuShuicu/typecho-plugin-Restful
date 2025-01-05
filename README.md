@@ -1,9 +1,4 @@
-# Typecho Restful 插件
-
-[![Build Status](https://travis-ci.org/moefront/typecho-plugin-Restful.svg?branch=master)](https://travis-ci.org/moefront/typecho-plugin-Restful)
-[![Version](https://badge.fury.io/ph/moefront%2Ftypecho-plugin-restful.svg)](https://packagist.org/packages/moefront/typecho-plugin-restful)
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-![built by](https://img.shields.io/badge/built_by-MoeFront-ff69b4.svg)
+# Typecho Restful 插件二次开发版
 
 这是一个将 Typecho 博客 RESTful 化的插件。启用此插件，你可以通过请求 API 向站点请求或写入信息（获取文章内容、获取评论、添加评论等）。
 
@@ -26,6 +21,20 @@ chown www:www -R Restful
 ## API
 
 下面假设您的站点已经开启了地址重写（伪静态）；如果没有的话，那么需要在下文列出的请求的 URI 前加上 `/index.php`，例如：`/api/posts` => `/index.php/api/posts`.
+
+# 二开记录
+
+> 修改可获取所有字段类型的内容
+
+### 文章列表
+
+`GET /api/posts`
+
+| 参数        | 类型   | 描述                       |      |
+| ----------- | ------ | -------------------------- | ---- |
+| number        | string    | 输出数量              | 可选 |
+
+# 原文档
 
 ### 文章列表
 
