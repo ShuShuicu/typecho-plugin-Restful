@@ -3,12 +3,13 @@ if (!defined('__TYPECHO_ROOT_DIR__')) {
     exit;
 }
 /**
- * Typecho Restful 插件
+ * Typecho Restful 插件 StarBeat专用版
+ * (原作者 MoeFront Studio)
  *
  * @package Restful
- * @author MoeFront Studio
+ * @author 鼠子
  * @version 1.2.0
- * @link https://moefront.github.io
+ * @link https://blog.miomoe.cn/
  */
 class Restful_Plugin implements Typecho_Plugin_Interface
 {
