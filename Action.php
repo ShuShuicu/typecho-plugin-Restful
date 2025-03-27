@@ -373,23 +373,56 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
     }
 
     /**
-     * 获取分类列表的接口
+     * 获取分类列表/详情的接口
+     * 不传参数返回全部分类列表
+     * 传入 mid 或 slug 参数返回单个分类详情
      *
-     * @return void
+    * @return void
      */
     public function categoriesAction()
     {
         $this->lockMethod('get');
         $this->checkState('categories');
+    
+        // 获取参数
+        $mid = $this->request->get('mid');
+        $slug = $this->request->get('slug');
+        
         $categories = $this->widget('Widget_Metas_Category_List');
-
+    
+        // 如果有 mid 或 slug 参数，返回单个分类详情
+        if (!empty($mid) || !empty($slug)) {
+            $category = null;
+        
+            if (!empty($mid)) {
+                $category = $categories->getCategory($mid);
+            } else {
+                // 改进 slug 查询方式
+                $allCategories = isset($categories->stack) ? $categories->stack : array_values($categories->getData());
+                foreach ($allCategories as $cat) {
+                    if (isset($cat['slug']) && $cat['slug'] === $slug) {
+                        $category = $cat;
+                        break;
+                    }
+                }
+            }
+        
+            if (empty($category)) {
+                $this->throwException('分类不存在', 404);
+            }
+        
+            $this->throwData($category);
+            return;
+        }
+    
+        // 默认返回全部分类列表
         if (isset($categories->stack)) {
             $this->throwData($categories->stack);
         } else {
             $reflect = new ReflectionObject($categories);
             $map = $reflect->getProperty('_map');
             $map->setAccessible(true);
-            $this->throwData(array_merge($map->getValue($categories)));
+            $this->throwData(array_values($map->getValue($categories))); // 使用 array_values 确保返回数组
         }
     }
 
